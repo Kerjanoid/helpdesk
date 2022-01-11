@@ -4,16 +4,16 @@ import VueRouter from 'vue-router';
 Vue.use(VueRouter);
 
 const routes = [
-  // {
-  //   path: '/',
-  //   name: 'Main',
-  //   component: () => import('../views/Main.vue'),
-  // },
-  // {
-  //   path: '/about',
-  //   name: 'About',
-  //   component: () => import('../views/About.vue'),
-  // },
+  {
+    path: '/',
+    name: 'New-ticket',
+    component: () => import('@/views/New-ticket.vue'),
+  },
+  {
+    path: '/tickets',
+    name: 'Tickets',
+    component: () => import('@/views/Tickets.vue'),
+  },
 ];
 
 const router = new VueRouter({
