@@ -6,82 +6,22 @@
       <b-card no-body>
         <b-tabs pills card>
           <b-tab title="All" active>
-            <b-alert
-              show
-              variant="success"
-            >
-              Lorem ipsum dolor sit amet, consectetur aa avvdvadva asaf1
-            </b-alert>
-            <b-alert
-              show
-              variant="success"
-            >
-              Lorem ipsum dolor sit amet, consectetur aa avvdvadva asaf2
-            </b-alert>
-            <b-alert
-              show
-              variant="success"
-            >
-              Lorem ipsum dolor sit amet, consectetur aa avvdvadva asaf3
-            </b-alert>
-            <b-alert
-              show
-              variant="secondary"
-            >
-              Lorem ipsum dolor sit amet, consectetur aa avvdvadva asaf1
-            </b-alert>
-            <b-alert
-              show
-              variant="secondary"
-            >
-              Lorem ipsum dolor sit amet, consectetur aa avvdvadva asaf2
-            </b-alert>
-            <b-alert
-              show
-              variant="secondary"
-            >
-              Lorem ipsum dolor sit amet, consectetur aa avvdvadva asaf3
-            </b-alert>
+            <Ticket
+              v-for="ticket in tickets"
+              :ticket="ticket"
+              :key="ticket.id"/>
           </b-tab>
           <b-tab title="Opened">
-            <b-alert
-              show
-              variant="success"
-            >
-              Lorem ipsum dolor sit amet, consectetur aa avvdvadva asaf1
-            </b-alert>
-            <b-alert
-              show
-              variant="success"
-            >
-              Lorem ipsum dolor sit amet, consectetur aa avvdvadva asaf2
-            </b-alert>
-            <b-alert
-              show
-              variant="success"
-            >
-              Lorem ipsum dolor sit amet, consectetur aa avvdvadva asaf3
-            </b-alert>
+            <Ticket
+              v-for="ticket in tickets.filter(item => item.isOpened)"
+              :ticket="ticket"
+              :key="ticket.id"/>
           </b-tab>
           <b-tab title="Closed">
-            <b-alert
-              show
-              variant="secondary"
-            >
-              Lorem ipsum dolor sit amet, consectetur aa avvdvadva asaf1
-            </b-alert>
-            <b-alert
-              show
-              variant="secondary"
-            >
-              Lorem ipsum dolor sit amet, consectetur aa avvdvadva asaf2
-            </b-alert>
-            <b-alert
-              show
-              variant="secondary"
-            >
-              Lorem ipsum dolor sit amet, consectetur aa avvdvadva asaf3
-            </b-alert>
+            <Ticket
+              v-for="ticket in tickets.filter(item => !item.isOpened)"
+              :ticket="ticket"
+              :key="ticket.id"/>
           </b-tab>
         </b-tabs>
       </b-card>
@@ -90,15 +30,41 @@
 </template>
 
 <script>
-// import Form from '@/components/Form.vue';
+import Ticket from '@/components/Ticket.vue';
 
 export default {
   name: 'Tickets',
   components: {
-
+    Ticket,
+  },
+  data() {
+    return {
+      tickets: [],
+    };
   },
   methods: {
-
+    async getTickets() {
+      try {
+        const response = await fetch('https://jsonplaceholder.typicode.com/posts');
+        if (response.ok) {
+          return response.json();
+        } return Promise.reject(new Error(`Error ${response.status}.`));
+      } catch (error) {
+        return error;
+      }
+    },
+  },
+  mounted() {
+    this.getTickets().then((res) => {
+      // eslint-disable-next-line array-callback-return
+      res.map((item) => {
+        const random = Math.random() < 0.3;
+        // eslint-disable-next-line no-param-reassign
+        item.isOpened = random;
+      });
+      this.tickets = res;
+    // eslint-disable-next-line no-console
+    }).catch((err) => console.log(err));
   },
 };
 </script>
