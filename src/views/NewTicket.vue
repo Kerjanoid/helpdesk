@@ -11,7 +11,7 @@
 import Form from '@/components/Form.vue';
 
 export default {
-  name: 'New-ticket',
+  name: 'NewTicket',
   components: {
     Form,
   },

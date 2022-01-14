@@ -5,7 +5,7 @@ const ticketModule = {
     tickets: [],
     searchQuery: '',
     page: 1,
-    limit: 10,
+    limit: 12,
     totalPages: 0,
   }),
   getters: {

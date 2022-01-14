@@ -1,20 +1,20 @@
 <template>
-  <div>
-    <b-alert
-      show
-      variant="success"
-      v-if="ticket.isOpened"
-    >
-      {{ ticket.title }}
-    </b-alert>
-    <b-alert
-      show
-      variant="secondary"
-      v-else
-    >
-      {{ ticket.title }}
-    </b-alert>
-  </div>
+  <b-button
+    block
+    variant="success"
+    v-if="ticket.isOpened"
+    @click="showTicket"
+  >
+    {{ ticket.title }}
+  </b-button>
+  <b-button
+    block
+    variant="outline-secondary"
+    v-else
+    @click="showTicket"
+  >
+    {{ ticket.title }}
+  </b-button>
 </template>
 
 <script>
@@ -26,15 +26,11 @@ export default {
       required: true,
     },
   },
-  // data() {
-  //   return {
-  //       title: '',
-  //     },
-  //   };
-  // },
-  // methods: {
-  //   },
-  // },
+  methods: {
+    showTicket() {
+      this.$router.push({ path: `/tickets/${this.ticket.id}` });
+    },
+  },
 };
 </script>
 

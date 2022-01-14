@@ -13,19 +13,22 @@
             <Ticket
               v-for="ticket in searchedTickets"
               :ticket="ticket"
-              :key="ticket.id"/>
+              :key="ticket.id"
+              />
           </b-tab>
           <b-tab title="Opened">
             <Ticket
               v-for="ticket in openedTickets"
               :ticket="ticket"
-              :key="ticket.id"/>
+              :key="ticket.id"
+              />
           </b-tab>
           <b-tab title="Closed">
             <Ticket
               v-for="ticket in closedTickets"
               :ticket="ticket"
-              :key="ticket.id"/>
+              :key="ticket.id"
+              />
           </b-tab>
         </b-tabs>
       </b-card>
@@ -57,8 +60,8 @@ export default {
   },
   computed: {
     ...mapState({
-      tickets: (state) => state.post.tickets,
-      searchQuery: (state) => state.post.searchQuery,
+      tickets: (state) => state.ticket.tickets,
+      searchQuery: (state) => state.ticket.searchQuery,
     }),
     ...mapGetters([
       'searchedTickets',
@@ -66,7 +69,7 @@ export default {
       'closedTickets',
     ]),
   },
-  mounted() {
+  created() {
     this.modifyTickets();
   },
 };

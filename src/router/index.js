@@ -6,13 +6,18 @@ Vue.use(VueRouter);
 const routes = [
   {
     path: '/',
-    name: 'New-ticket',
-    component: () => import('@/views/New-ticket.vue'),
+    name: 'NewTicket',
+    component: () => import('@/views/NewTicket.vue'),
   },
   {
     path: '/tickets',
     name: 'Tickets',
     component: () => import('@/views/Tickets.vue'),
+  },
+  {
+    path: '/tickets/:post_id',
+    name: 'ViewTicket',
+    component: () => import('@/views/ViewTicket.vue'),
   },
 ];
 
