@@ -44,7 +44,7 @@ const ticketModule = {
           },
         });
         commit('setTotalPages', Math.ceil(response.headers['x-total-count'] / state.limit));
-        if (response.status === 200) {
+        if (response.status < 300) {
           return response.data;
         } return Promise.reject(new Error(`Error ${response.status}.`));
       } catch (error) {

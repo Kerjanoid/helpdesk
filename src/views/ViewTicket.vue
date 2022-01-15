@@ -1,5 +1,11 @@
 <template>
   <b-container fluid="md">
+    <div class="button-wrapper">
+      <b-button
+        variant="outline-info"
+        @click="toAllTickets"
+      >All tickets</b-button>
+    </div>
     <div class="ticket__wrapper">
       <h2 class="ticket__title">{{ foundTicket.title }}</h2>
       <h4 v-if="foundTicket.isOpened" class="ticket__subtitle">Ticket is opened</h4>
@@ -7,27 +13,30 @@
       <p class="ticket__text">{{ foundTicket.body }}</p>
     </div>
 
-    <b-list-group>
+    <b-list-group v-if="foundComments.length > 0">
       <h4 class="comments__title">Comments:</h4>
       <b-list-group-item
         class="text-align"
-        v-for="comment in comments"
+        v-for="comment in foundComments"
         :ticket="comment"
         :key="comment.id">
         {{ comment.body }}
       </b-list-group-item>
     </b-list-group>
 
-    <CommentForm />
+    <CommentForm
+      :ticketId="currentPathId"
+      v-if="foundTicket.isOpened"
+    />
   </b-container>
 </template>
 
 <script>
 import {
   mapState,
-  mapGetters,
-  // mapMutations,
-  mapActions,
+  // mapGetters,
+  mapMutations,
+  // mapActions,
 } from 'vuex';
 import CommentForm from '@/components/CommentForm.vue';
 
@@ -37,37 +46,40 @@ export default {
     CommentForm,
   },
   methods: {
-    // ...mapMutations([
-    //   'setSearchQuery',
-    // ]),
-    ...mapActions([
-      'saveComments',
-    ]),
-    ticket() {
-      return this.tickets.find((i) => i.id === 1);
+    toAllTickets() {
+      this.$router.push({ path: '/tickets' });
     },
+    ...mapMutations([
+      'setPostId',
+    ]),
   },
   computed: {
+    currentPathId() {
+      return +this.$router.currentRoute.params.ticket_id;
+    },
     foundTicket() {
-      return this.tickets.find((i) => i.id === 1);
+      return this.tickets.find((i) => i.id === this.currentPathId);
+    },
+    foundComments() {
+      return this.comments.filter((i) => i.postId === this.currentPathId);
     },
     ...mapState({
       comments: (state) => state.comments.comments,
       tickets: (state) => state.ticket.tickets,
     }),
-    ...mapGetters([
-      'searchedTickets',
-      'openedTickets',
-      'closedTickets',
-    ]),
   },
   mounted() {
-    this.saveComments();
+    this.setPostId(this.currentPathId);
   },
 };
 </script>
 
 <style scoped>
+.button-wrapper {
+  margin-top: 10px;
+  display: flex;
+}
+
 .ticket__wrapper {
   margin: 10px 0;
   padding: 15px 5px;

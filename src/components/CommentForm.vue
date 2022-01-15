@@ -1,16 +1,17 @@
 <template>
   <div>
-    <b-form class="form-layout" @submit="onSubmit">
+    <b-form class="form-layout" @submit.prevent="onSubmit">
       <b-form-textarea
         id="comment-input"
         placeholder="Enter comment text at least 6 characters"
         rows="2"
         no-resize
-        v-model="comment"
         :state="comment.length >= 6"
         type="text"
         minlength=6
         maxlength=252
+        :model-value="comment"
+        @update="setComment"
         required
       />
 
@@ -22,19 +23,36 @@
 </template>
 
 <script>
+import {
+  mapState,
+  // mapGetters,
+  mapMutations,
+  mapActions,
+} from 'vuex';
+
 export default {
   name: 'CommentForm',
-  data() {
-    return {
-      comment: '',
-    };
+  props: {
+    ticketId: {
+      type: Number,
+      required: true,
+    },
   },
   methods: {
-    onSubmit(event) {
-      event.preventDefault();
-      // eslint-disable-next-line no-alert
-      alert(JSON.stringify(this.comment));
+    ...mapActions([
+      'addComment',
+    ]),
+    ...mapMutations([
+      'setComment',
+    ]),
+    onSubmit() {
+      this.addComment();
     },
+  },
+  computed: {
+    ...mapState({
+      comment: (state) => state.comments.comment,
+    }),
   },
 };
 </script>

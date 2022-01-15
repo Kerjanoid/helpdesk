@@ -14,22 +14,28 @@
               v-for="ticket in searchedTickets"
               :ticket="ticket"
               :key="ticket.id"
-              />
+            />
           </b-tab>
           <b-tab title="Opened">
             <Ticket
               v-for="ticket in openedTickets"
               :ticket="ticket"
               :key="ticket.id"
-              />
+            />
           </b-tab>
           <b-tab title="Closed">
             <Ticket
               v-for="ticket in closedTickets"
               :ticket="ticket"
               :key="ticket.id"
-              />
+            />
           </b-tab>
+          <div class="pagination">
+            <button class="pagination__button" @click="clg">12</button>
+            <button class="pagination__button" @click="clg">12</button>
+            <button class="pagination__button" @click="clg">12</button>
+            <button class="pagination__button" @click="clg">12</button>
+          </div>
         </b-tabs>
       </b-card>
     </b-container>
@@ -41,7 +47,7 @@ import {
   mapState,
   mapGetters,
   mapMutations,
-  mapActions,
+  // mapActions,
 } from 'vuex';
 import Ticket from '@/components/Ticket.vue';
 
@@ -54,9 +60,12 @@ export default {
     ...mapMutations([
       'setSearchQuery',
     ]),
-    ...mapActions([
-      'modifyTickets',
-    ]),
+    clg() {
+      console.log('object');
+    },
+    // ...mapActions([
+    //   'modifyTickets',
+    // ]),
   },
   computed: {
     ...mapState({
@@ -69,9 +78,6 @@ export default {
       'closedTickets',
     ]),
   },
-  created() {
-    this.modifyTickets();
-  },
 };
 </script>
 
@@ -82,5 +88,16 @@ export default {
 }
 .search {
   margin-bottom: 20px;
+}
+
+.pagination {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+
+.pagination__button {
+  width: 40px;
+  height: 40px;
 }
 </style>

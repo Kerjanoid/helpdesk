@@ -6,12 +6,25 @@
 </template>
 
 <script>
+import {
+  mapActions,
+} from 'vuex';
 import Header from '@/components/Header.vue';
 
 export default {
   name: 'App',
   components: {
     Header,
+  },
+  methods: {
+    ...mapActions([
+      'modifyTickets',
+      'saveComments',
+    ]),
+  },
+  created() {
+    this.modifyTickets();
+    this.saveComments();
   },
 };
 </script>
