@@ -30,11 +30,16 @@
               :key="ticket.id"
             />
           </b-tab>
-          <div class="pagination">
-            <button class="pagination__button" @click="clg">12</button>
-            <button class="pagination__button" @click="clg">12</button>
-            <button class="pagination__button" @click="clg">12</button>
-            <button class="pagination__button" @click="clg">12</button>
+          <div class="pagination" v-if="totalPages > 1">
+            <button
+              class="pagination__button"
+              :class="{
+                'pagination__button_current-page': currentPage === page
+              }"
+              @click="changePage(page)"
+              v-for="page of totalPages"
+              :key="page"
+            >{{ page }}</button>
           </div>
         </b-tabs>
       </b-card>
@@ -47,7 +52,7 @@ import {
   mapState,
   mapGetters,
   mapMutations,
-  // mapActions,
+  mapActions,
 } from 'vuex';
 import Ticket from '@/components/Ticket.vue';
 
@@ -59,18 +64,22 @@ export default {
   methods: {
     ...mapMutations([
       'setSearchQuery',
+      'setCurrentPage',
     ]),
-    clg() {
-      console.log('object');
+    changePage(pageNumber) {
+      this.setCurrentPage(pageNumber);
+      this.modifyTickets();
     },
-    // ...mapActions([
-    //   'modifyTickets',
-    // ]),
+    ...mapActions([
+      'modifyTickets',
+    ]),
   },
   computed: {
     ...mapState({
       tickets: (state) => state.ticket.tickets,
       searchQuery: (state) => state.ticket.searchQuery,
+      totalPages: (state) => state.ticket.totalPages,
+      currentPage: (state) => state.ticket.currentPage,
     }),
     ...mapGetters([
       'searchedTickets',
@@ -97,7 +106,23 @@ export default {
 }
 
 .pagination__button {
-  width: 40px;
-  height: 40px;
+  margin-right: 2px;
+  width: 35px;
+  height: 35px;
+  border: 1px solid rgba(0, 80, 150, .8);
+  color: rgba(0, 40, 125, .7);
+  background-color: white;
+  border-radius: 25%;
+  font-weight: 600;
+  transition: ease .3s;
+  outline: none;
+}
+
+.pagination__button:hover {
+  opacity: .7;
+}
+
+.pagination__button_current-page {
+  border: 2px solid rgba(0, 80, 150, .8);
 }
 </style>

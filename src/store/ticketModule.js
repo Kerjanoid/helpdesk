@@ -4,7 +4,7 @@ const ticketModule = {
   state: () => ({
     tickets: [],
     searchQuery: '',
-    page: 1,
+    currentPage: 1,
     limit: 12,
     totalPages: 0,
   }),
@@ -24,8 +24,8 @@ const ticketModule = {
     setTickets(state, tickets) {
       state.tickets = tickets;
     },
-    setPage(state, page) {
-      state.page = page;
+    setCurrentPage(state, currentPage) {
+      state.currentPage = currentPage;
     },
     setTotalPages(state, totalPages) {
       state.totalPages = totalPages;
@@ -39,7 +39,7 @@ const ticketModule = {
       try {
         const response = await axios.get('https://jsonplaceholder.typicode.com/posts', {
           params: {
-            _page: state.page,
+            _page: state.currentPage,
             _limit: state.limit,
           },
         });
