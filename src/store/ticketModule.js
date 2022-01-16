@@ -62,6 +62,32 @@ const ticketModule = {
         // eslint-disable-next-line no-console
         .catch((err) => console.log(err));
     },
+
+    async getFile() {
+      try {
+        const response = await axios.get('https://source.unsplash.com/random', {
+          responseType: 'blob',
+        });
+        if (response.status < 300) {
+          return response.data;
+        } return Promise.reject(new Error(`Error ${response.status}.`));
+      } catch (error) {
+        return error;
+      }
+    },
+    downloadFile({ dispatch }) {
+      dispatch('getFile').then((res) => {
+        const url = URL.createObjectURL(new Blob([res], { type: 'image/jpeg' }));
+        const link = document.createElement('a');
+        link.href = url;
+        link.download = '';
+        document.body.appendChild(link);
+        link.click();
+        link.remove();
+      })
+        // eslint-disable-next-line no-console
+        .catch((err) => console.log(err));
+    },
   },
 };
 

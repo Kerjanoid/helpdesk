@@ -11,6 +11,7 @@
       <h4 v-if="foundTicket.isOpened" class="ticket__subtitle">Ticket is opened</h4>
       <h4 v-else class="ticket__subtitle ticket__subtitle_closed">Ticket is closed</h4>
       <p class="ticket__text">{{ foundTicket.body }}</p>
+      <b-button @click="downloadFile">Download attachment</b-button>
     </div>
 
     <b-list-group v-if="foundComments.length > 0">
@@ -36,7 +37,7 @@ import {
   mapState,
   // mapGetters,
   mapMutations,
-  // mapActions,
+  mapActions,
 } from 'vuex';
 import CommentForm from '@/components/CommentForm.vue';
 
@@ -51,6 +52,9 @@ export default {
     },
     ...mapMutations([
       'setPostId',
+    ]),
+    ...mapActions([
+      'downloadFile',
     ]),
   },
   computed: {
