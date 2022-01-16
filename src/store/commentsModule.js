@@ -55,7 +55,6 @@ const commentsModule = {
     },
     addComment({ state, dispatch, commit }) {
       dispatch('postComment').then((res) => {
-        console.log(res);
         commit('setComments', [...state.comments, res]);
       })
         // eslint-disable-next-line no-console

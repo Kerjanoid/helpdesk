@@ -10,6 +10,7 @@
         type="text"
         minlength=6
         maxlength=252
+        :value="comment"
         :model-value="comment"
         @update="setComment"
         required
@@ -25,7 +26,6 @@
 <script>
 import {
   mapState,
-  // mapGetters,
   mapMutations,
   mapActions,
 } from 'vuex';
