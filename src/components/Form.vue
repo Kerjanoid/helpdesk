@@ -42,7 +42,7 @@
         />
       </b-form-group>
 
-      <b-form-file
+      <!-- <b-form-file
         id="files"
         class="file-label"
         placeholder="Attach files (optional)"
@@ -52,7 +52,7 @@
         :file-name-formatter="formatNames"
         :model-value="files"
         @change="pickFiles"
-      />
+      /> -->
 
       <div class="buttons">
         <b-button type="submit" variant="primary">Submit form</b-button>
@@ -80,27 +80,27 @@ export default {
       'setDescription',
       'setFiles',
     ]),
-    formatNames(files) {
-      return files.length === 1 ? files[0].name : `${files.length} files selected`;
-    },
-    pickFiles(event) {
-      const pickedFiles = event.target.files;
-      this.setFiles(pickedFiles);
-    },
+    // formatNames(files) {
+    //   return files.length === 1 ? files[0].name : `${files.length} files selected`;
+    // },
+    // pickFiles(event) {
+    //   const pickedFiles = event.target.files;
+    //   this.setFiles(pickedFiles);
+    // },
     onSubmit() {
       this.postTicket();
     },
     onReset() {
       this.setTitle('');
       this.setDescription('');
-      this.setFiles({});
+      // this.setFiles({});
     },
   },
   computed: {
     ...mapState({
       title: (state) => state.newTicket.title,
       description: (state) => state.newTicket.description,
-      files: (state) => state.newTicket.files,
+      // files: (state) => state.newTicket.files,
     }),
   },
 };

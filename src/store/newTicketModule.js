@@ -5,7 +5,7 @@ const newTicketModule = {
     title: '',
     description: '',
     isOpened: true,
-    files: {},
+    // files: {},
   }),
   mutations: {
     setTitle(state, title) {
@@ -14,9 +14,9 @@ const newTicketModule = {
     setDescription(state, description) {
       state.description = description;
     },
-    setFiles(state, files) {
-      state.files = files;
-    },
+    // setFiles(state, files) {
+    //   state.files = files;
+    // },
   },
   actions: {
     async createTicket({ state }) {
@@ -25,7 +25,7 @@ const newTicketModule = {
           title: state.title,
           description: state.description,
           isOpened: state.isOpened,
-          files: state.files,
+          // files: state.files,
         },
         {
           headers: {
@@ -41,14 +41,15 @@ const newTicketModule = {
     },
     postTicket({ dispatch, commit }) {
       dispatch('createTicket').then((res) => {
-        commit('setTitle', '');
-        commit('setDescription', '');
-        commit('setFiles', {});
         // eslint-disable-next-line no-console
         console.log(res);
       })
         // eslint-disable-next-line no-console
-        .catch((err) => console.log(err));
+        .catch((err) => console.log(err))
+        .finally(
+          commit('setTitle', ''),
+          commit('setDescription', ''),
+        );
     },
   },
 };
